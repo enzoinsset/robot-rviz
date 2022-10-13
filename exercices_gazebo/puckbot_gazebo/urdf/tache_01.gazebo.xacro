@@ -1,0 +1,61 @@
+<?xml version ="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="puckbot">
+
+
+    <xacro:include filename="$(find puckbot_description)/urdf/description.xacro" /> 
+    <xacro:include filename="$(find puckbot_gazebo)/urdf/sensors.gazebo.xacro" /> 
+
+<!-- TACHE 01 : inclure ici le plugin gazebo_ros_control -->
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>puckbot</robotNamespace>
+  </plugin>
+</gazebo>
+
+<!-- FIN DE TACHE-->
+
+<!-- TACHE 02 : ecrire ici une macro pour creer les transmissions des roues motrices,
+les proprietes physiques du contact (raideurs et coeff de friction)
+ainsi qu'une couleur
+et appeler cette macro pour les roues droite et gauche
+ -->
+ <xacro:macro name="wheel_trans_macro" params="pos">
+    <transmission name="${pos}_wheel_trans">
+   <type>transmission_interface/SimpleTransmission</type>
+   <actuator name="${pos}_wheel_motor">
+   <mechanicalReduction> 1 </mechanicalReduction>
+   <joint name="${pos}_wheel_joint">
+   <hardwareInterface>EffortJointInterface</hardwareInterface>
+   </joint>
+</transmission>
+
+
+<gazebo reference="${pos}_wheel">
+    <mu1 value="2.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <material>Gazebo/Orange</material>
+</gazebo>
+</xacro:macro>
+    <xacro:wheel_trans_macro pos="left" />
+    <xacro:wheel_trans_macro pos="right" />
+<!-- FIN DE TACHE -->
+
+<!-- TACHE 03 : ajouter ici les proprietes du contact de la roue folle et une couleur -->
+
+<!-- FIN DE TACHE-->
+
+<!-- TACHE 04 : appeler une couleur pour BASE_LINK-->
+
+<link name="base_link">
+    <visual>
+        <material name="orange"/>
+        <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+    </visual>
+</link>
+
+<!-- FIN DE TACHE-->
+
+</robot>

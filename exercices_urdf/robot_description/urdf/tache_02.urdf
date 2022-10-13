@@ -1,0 +1,38 @@
+<?xml version ="1.0"?>
+<robot name="mon_premier_robot">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.25" length="0.1" />
+            </geometry>
+        </visual>
+    </link>
+
+     <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+        </visual>
+    </link>
+
+    
+    <joint name="right_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0.1 -0.2 -0.025" rpy="1.57075 0.0 0.0"/>
+    </joint> 
+
+    <!-- TACHE 02 : AJOUTER LA ROUE DROITE
+    La roue est un cylindre de 10cm de diametre et de 3cm d'epaisseur
+    Elle est positionnee 10cm vers l'avant du robot suivant X
+    20cm suivant Y (Attention au sens, il s'agit de la roue droite)
+    et -2,5cm suivant Z.
+    Il faut ajouter la roue en elle-meme et egalement sa liaison cinematique
+    par rapport a base_link.
+    Utilisez dans un premier temps une liaison de type FIXED
+    -->
+    
+    
+    <!-- FIN TACHE 02-->
+</robot>

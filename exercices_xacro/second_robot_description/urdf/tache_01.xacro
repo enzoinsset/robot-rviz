@@ -1,0 +1,141 @@
+<?xml version ="1.0"?>
+<robot name="mon_premier_robot">
+
+<!-- TACHE 01 : CREER DES PARAMETRES POUR L'ENSEMBLE DE LA GEOMETRIE DU ROBOT
+   - le diametre du corps
+   - la hauteur du corps
+   - le diametre des roues motrices
+   - l'epaisseur des roues motrices
+   - l'ecartement des roues motrices
+   - leur position suivant X
+   - le diametre de la roue folle
+   - l'epaisseur de la roue folle
+   - la position de la roue folle suivant X
+-->
+
+<xacro:property name="chassis_diameter" value="0.5"/>
+    <xacro:property name="chassis_height" value="0.1"/>
+    <xacro:property name="wheel_diameter" value="0.1"/>
+    <xacro:property name="wheel_width" value="0.03"/>
+    <xacro:property name="wheel_desaxing" value="0.4"/>
+    <xacro:property name="wheel_forwarding" value="0.1"/>
+    <xacro:property name="crazy_wheel_backwarding" value="0.2"/>
+    <xacro:property name="crazy_wheel_diameter" value="0.05"/>
+    <xacro:property name="crazy_wheel_width" value="0.02"/>
+
+
+    <material name="Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <link name="base_link">
+<!-- TACHE 02 : METTRE A JOUR BASE_LINK AVEC LES PARAMETRES-->
+        <visual>
+            <geometry>
+                <cylinder radius="${chassis_diameter}" length="${chassis_height}" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${chassis_diameter}" length="${chassis_height}" />
+            </geometry>
+        </collision>
+<!-- FIN DE TACHE 02-->
+    </link>
+
+
+    <link name="right_wheel">
+<!-- TACHE 03 : METTRE A JOUR RIGHT_WHEEL AVEC LES PARAMETRES-->
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_diameter/2}" length="${wheel_diameter}" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_diameter/2}" length="${wheel_diameter}" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+<!-- FIN DE TACHE 03-->
+    </link>
+
+    <joint name="right_wheel_joint" type="continuous">
+<!-- TACHE 04 : METTRE A JOUR RIGHT_WHEEL_JOINT AVEC LES PARAMETRES-->
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="${wheel_forwarding} ${-wheel_desaxing/2} ${-wheel_diameter/4}"/>
+        <axis xyz="0.0 1.0 0.0"/>
+<!-- FIN DE TACHE 04-->
+    </joint>    
+
+   <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+    </link>
+
+<!-- FIN DE TACHE 05-->
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="${wheel_forwarding} ${wheel_desaxing/2} ${-wheel_diameter/4}"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>     
+
+<!-- FIN DE TACHE 06-->
+
+    <link name="crazy_wheel_support"/>
+
+  
+    
+
+    <joint name="crazy_wheel_support_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="crazy_wheel_support"/>
+        <origin xyz="${-crazy_wheel_backwarding} 0.0 ${-(wheel_diameter - crazy_wheel_diameter)/2}"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>       
+
+<!-- FIN DE TACHE 07-->
+
+<link name="crazy_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+    </link>
+<!-- FIN DE TACHE 08-->
+
+      <joint name="crazy_wheel_joint" type="continuous">
+        <parent link="crazy_wheel_support"/>
+        <child link="crazy_wheel"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+</robot>

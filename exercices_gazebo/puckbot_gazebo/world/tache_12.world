@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<sdf version='1.4'>
+	<world name='default'>
+
+        <scene>
+            <sky>
+                <clouds>
+                    <speed>12</speed>
+               </clouds>
+            </sky>
+        </scene>
+
+	    <include>
+    	  	<uri>model://sun</uri>
+    	</include>
+
+	    <include>
+    	  	<uri>model://ground_plane</uri>
+    	</include>
+
+	    <include>
+			<name>tree0</name>
+    	  	<uri>model://oak_tree</uri>
+		  	<pose>0.0 3.0 0.0 0.0 0.0 1.110</pose>
+    	</include>
+
+	    <include>
+			<name>tree1</name>
+	    	<uri>model://oak_tree</uri>
+			<pose>5.0 3.0 0.0 0.0 0.0 -0.30</pose>
+    	</include>
+
+<!-- TACHE 12 : Creer un ensemble de 3 caisses directement dans ce fichier SDF
+     Le robot ne doit pas pouvoir traverser les caisses.
+		Premiere caisse :
+			dimension : 0.75 1.0 1.5
+			position : 1.0 -4.0 0.75
+			orientation : 0.1 rad autour de z
+			couleur : marron
+ 		Deuxieme caisse :
+			dimension : 0.5 0.5 2
+			position : 5.0 2.0 1.0
+			orientation : -0.35 rad autour de z
+			couleur : marron
+		Troisieme caisse :
+			dimension : 1.5 1. 1.
+			position : 10.0 0.0 0.50
+			orientation : 0. rad autour de z
+			couleur : marron
+-->
+
+<!-- FIN DE TACHE-->
+
+<model name="caisses">
+			<link name="caisse_00">
+				<pose>1.0 -4.0 0.75 0.0 0.0 0.10</pose>
+				<visual name="visual">
+					<geometry>
+						<box>
+							<size>0.75 1.0 1.5</size>
+						</box>
+					</geometry>
+					<material>
+						<ambient>0.4 0.3 0.2 1</ambient>
+						<diffuse>0.3 0.2 0.1 1</diffuse>
+						<specular>0.1 0.1 0.1 1</specular>
+						<emissive>0 0 0 0</emissive>
+					</material>
+				</visual>
+				<collision name="collision">
+					<geometry>
+						<box>
+							<size>0.75 1.0 1.5</size>
+						</box>
+					</geometry>
+				</collision>
+			</link>
+
+			<link name="caisse_01">
+				<pose>5.0 2.0 1.0 0.0 0.0 -0.35</pose>
+				<visual name="visual">
+					<geometry>
+						<box>
+							<size>0.5 0.5 2</size>
+						</box>
+					</geometry>
+					<material>
+						<ambient>0.4 0.3 0.2 1</ambient>
+						<diffuse>0.3 0.2 0.1 1</diffuse>
+						<specular>0.1 0.1 0.1 1</specular>
+						<emissive>0 0 0 0</emissive>
+					</material>
+				</visual>
+				<collision name="collision">
+					<geometry>
+						<box>
+							<size>0.5 0.5 2</size>
+						</box>
+					</geometry>
+				</collision>
+			</link>
+
+			<link name="caisse_02">
+				<pose>10.0 0.0 0.50 0.0 0.0 0.0</pose>
+				<visual name="visual">
+					<geometry>
+						<box>
+							<size>1.5 1. 1.</size>
+						</box>
+					</geometry>
+					<material>
+						<ambient>0.4 0.3 0.2 1</ambient>
+						<diffuse>0.3 0.2 0.1 1</diffuse>
+						<specular>0.1 0.1 0.1 1</specular>
+						<emissive>0 0 0 0</emissive>
+					</material>
+				</visual>
+				<collision name="collision">
+					<geometry>
+						<box>
+							<size>1.5 1. 1.</size>
+						</box>
+					</geometry>
+				</collision>
+			</link>
+
+	    </model>
+
+	</world>
+</sdf>

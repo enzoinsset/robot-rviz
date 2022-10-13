@@ -1,0 +1,35 @@
+<?xml version ="1.0"?>
+<robot name="mon_premier_robot">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.25" length="0.1" />
+            </geometry>
+        </visual>
+    </link>
+
+
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+        </visual>
+    </link>
+
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0.1 -0.2 -0.025"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+    <!-- TACHE 04 : AJOUTER LA ROUE GAUCHE
+    Ajouter la roue gauche symetrique a la roue droite par rapport au plan central du robot XZ
+    -->
+
+
+    <!-- FIN DE LA TACHE 04-->
+
+</robot>

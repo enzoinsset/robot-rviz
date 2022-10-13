@@ -1,0 +1,102 @@
+<?xml version ="1.0"?>
+<robot name="mon_premier_robot">
+
+    <material name="Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://robot_description/urdf/meshes/chassis.dae"/>
+            </geometry>
+            <origin xyz="0.0 0.0 -0.05" rpy="0.0 0.0 -1.57075"/>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://robot_description/urdf/meshes/chassis.dae"/>
+            </geometry>
+            <origin xyz="0.0 0.0 -0.05" rpy="0.0 0.0 -1.57075"/>
+        </collision>
+    </link>
+
+
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+        </collision>
+    </link>
+
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0.1 -0.2 -0.025"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+    <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.05" length="0.03" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+        </collision>
+    </link>
+
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="0.1 0.2 -0.025"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+    <link name="crazy_wheel_support"/>
+
+    <joint name="crazy_wheel_support_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="crazy_wheel_support"/>
+        <origin xyz="-0.2 0.0 -0.05"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>    
+
+    <link name="crazy_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.025" length="0.02" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.025" length="0.02" />
+            </geometry>
+            <origin rpy="1.57075 0.0 0.0"/>
+        </collision>
+    </link>
+
+    <joint name="crazy_wheel_joint" type="continuous">
+        <parent link="crazy_wheel_support"/>
+        <child link="crazy_wheel"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+</robot>

@@ -1,0 +1,17 @@
+<?xml version ="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="puckbot">
+
+<xacro:macro name="cylinder_inertial" params="density r h">
+    <xacro:property name="mass" value="${density * 1000 * pi * r*r * h}"/> <!-- density in unit less must be converted in kg/m3 -->
+    <inertial>
+        <mass value="${mass}"/>
+        <inertia ixx="${mass/12*(3*r*r + h*h)}"
+                 ixy="0.0"
+                 ixz="0.0"
+                 iyy="${mass/12*(3*r*r + h*h)}"
+                 iyz="0.0"
+                 izz="${mass*r*r/2}"/> 
+    </inertial>
+</xacro:macro>
+
+</robot>

@@ -1,0 +1,8 @@
+<?xml version ="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mon_second_robot">
+
+    <!-- TACHE 11 : copier ici la ou les macros realtives aux roues -->
+
+    <!-- FIN DE TACHE -->
+
+</robot>

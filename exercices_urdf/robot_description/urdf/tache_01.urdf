@@ -1,0 +1,15 @@
+<?xml version ="1.0"?>
+<robot name="mon_premier_robot">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <!-- TACHE 01 : AJOUTER ICI UNE CYLINDRE DE DIAMETRE 50cm ET DE HAUTEUR 10cm -->
+                <cylinder radius="0.25" length="0.10"/>
+
+
+                
+                <!-- FIN DE LA TACHE 01-->
+            </geometry>
+        </visual>
+    </link>
+</robot>

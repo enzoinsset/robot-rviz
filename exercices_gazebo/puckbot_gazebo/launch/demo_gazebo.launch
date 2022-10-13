@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find puckbot_gazebo)/urdf/puckbot.gazebo.xacro"/>
+  <arg name="rvizconfig" default="$(find puckbot_gazebo)/rviz/sensors.rviz" />
+
+  <include file="$(find puckbot_gazebo)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <include file="$(find puckbot_control)/launch/puckbot_control.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+
+</launch>

@@ -1,0 +1,112 @@
+<?xml version ="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="puckbot">
+
+    <xacro:property name="chassis_diameter" value="0.5"/>
+    <xacro:property name="chassis_height" value="0.1"/>
+    <xacro:property name="wheel_diameter" value="0.1"/>
+    <xacro:property name="wheel_width" value="0.03"/>
+    <xacro:property name="wheel_desaxing" value="0.4"/>
+    <xacro:property name="wheel_forwarding" value="0.1"/>
+    <xacro:property name="crazy_wheel_backwarding" value="0.2"/>
+    <xacro:property name="crazy_wheel_diameter" value="0.05"/>
+    <xacro:property name="crazy_wheel_width" value="0.02"/>
+
+    <xacro:include filename="$(find puckbot_description)/urdf/wheel.xacro" /> 
+    <xacro:include filename="$(find puckbot_description)/urdf/inertia.xacro" />
+
+    <material name="Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${chassis_diameter/2}" length="${chassis_height}" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${chassis_diameter/2}" length="${chassis_height}" />
+            </geometry>
+        </collision>
+     </link>
+
+
+    <!-- Ajout d'un corps factice qui reprend masse et inertie du corps
+    La bibliotheque KDL n'admet pas que le premier corps de la modelisation
+    est une masse et une inertie-->
+    <link name="inertial_link">
+        <xacro:cylinder_inertial density="0.5" r="${chassis_diameter/2}" h="${chassis_height}"/>
+    </link>
+    <joint name="inertial_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="inertial_link"/>
+    </joint>
+
+    <xacro:wheel_macro side="left">
+        <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+    </xacro:wheel_macro>
+
+    <xacro:wheel_macro side="right">
+        <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+    </xacro:wheel_macro>
+
+
+    <link name="crazy_wheel_support">
+        <xacro:cylinder_inertial density="5.0" r="0.025" h="0.01"/>
+    </link>
+
+    <joint name="crazy_wheel_support_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="crazy_wheel_support"/>
+        <origin xyz="${-crazy_wheel_backwarding} 0.0 ${-wheel_diameter/4-(wheel_diameter - crazy_wheel_diameter)/2}"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>    
+
+    <link name="crazy_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+        <xacro:cylinder_inertial density="1.5" r="${crazy_wheel_diameter/2}" h="${crazy_wheel_width}"/>
+    </link>
+
+    <joint name="crazy_wheel_joint" type="continuous">
+        <parent link="crazy_wheel_support"/>
+        <child link="crazy_wheel"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+    <link name="imu_link" />
+    <joint name="imu_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="imu_link"/>
+    </joint>    
+
+    <link name="camera" />
+    <joint name="camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="camera"/>
+        <origin xyz="${chassis_diameter/2+0.01} 0.0 0.0"/>
+    </joint>    
+
+    <link name="lidar_link" />
+    <joint name="lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_link"/>
+        <origin xyz="0.0 0.0 ${chassis_height+0.01}"/>
+    </joint>    
+
+
+</robot>

@@ -1,0 +1,113 @@
+<?xml version ="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mon_second_robot">
+
+    <xacro:property name="chassis_diameter" value="0.5"/>
+    <xacro:property name="chassis_height" value="0.1"/>
+    <xacro:property name="wheel_diameter" value="0.1"/>
+    <xacro:property name="wheel_width" value="0.03"/>
+    <xacro:property name="wheel_desaxing" value="0.4"/>
+    <xacro:property name="wheel_forwarding" value="0.1"/>
+    <xacro:property name="crazy_wheel_backwarding" value="0.2"/>
+    <xacro:property name="crazy_wheel_diameter" value="0.05"/>
+    <xacro:property name="crazy_wheel_width" value="0.02"/>
+
+    <material name="Black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${chassis_diameter/2}" length="${chassis_height}" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${chassis_diameter/2}" length="${chassis_height}" />
+            </geometry>
+        </collision>
+    </link>
+
+<!-- TACHE 10 : DEPLACER LA ou LES MACROS DES ROUES DANS LE FICHIER wheel_tache_11.xacro
+inclure le contenu de ce fichier grace a la commande XACRO adaptee
+seuls les appels finaux des macros doivent subsister ici -->
+
+    <xacro:macro name="wheel_joint_origin" params="side">
+        <xacro:if value="${side == 'left'}">
+            <origin xyz="${wheel_forwarding} ${wheel_desaxing/2} ${-wheel_diameter/4}"/>
+        </xacro:if>
+        <xacro:if value="${side == 'right'}">
+            <origin xyz="${wheel_forwarding} ${-wheel_desaxing/2} ${-wheel_diameter/4}"/>
+        </xacro:if>
+    </xacro:macro>
+
+    <xacro:macro name="wheel_macro" params="side *shape">
+    <link name="${side}_wheel">
+        <visual>
+            <geometry>
+                <xacro:insert_block name="shape" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <xacro:insert_block name="shape" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+    </link>
+
+    <joint name="${side}_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="${side}_wheel"/>
+        <xacro:wheel_joint_origin side="${side}"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+    </xacro:macro>
+
+    <xacro:wheel_macro side="left">
+        <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+    </xacro:wheel_macro>
+    <xacro:wheel_macro side="right">
+        <cylinder radius="${wheel_diameter/2}" length="${wheel_width}" />
+    </xacro:wheel_macro>
+
+<!-- FIN DE TACHE-->
+
+    <link name="crazy_wheel_support"/>
+
+    <joint name="crazy_wheel_support_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="crazy_wheel_support"/>
+        <origin xyz="${-crazy_wheel_backwarding} 0.0 ${-(wheel_diameter - crazy_wheel_diameter)/2}"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>    
+
+    <link name="crazy_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${crazy_wheel_diameter/2}" length="${crazy_wheel_width}" />
+            </geometry>
+            <origin rpy="${pi/2} 0.0 0.0"/>
+            <material name="Black"/>
+        </collision>
+    </link>
+
+    <joint name="crazy_wheel_joint" type="continuous">
+        <parent link="crazy_wheel_support"/>
+        <child link="crazy_wheel"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
+    </joint>    
+
+</robot>

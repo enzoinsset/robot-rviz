@@ -1,0 +1,38 @@
+puckbot_base_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  left_wheel: 'left_wheel_joint'
+  right_wheel: 'right_wheel_joint'
+  publish_rate: 50
+  pose_covariance_diagonal: [0.05, 0.05, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+  twist_covariance_diagonal: [0.05, 0.05, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+
+  # Wheel separation and diameter.
+  # Parametres optionnels
+  # diff_drive essaie de trouver les donnees dans le modele URDF
+  # si les valeurs trouvaient ne sont pas satisfaisantes (voir log au lancement du controller)
+  # vous pouvez les indiquer manuellement (decommenter les 2 dernieres lignes)
+  # Si vous les indiquez manuellement, diff_drive ne cherchera pas
+  # dans le modele URDF
+  wheel_separation : 1.0
+  # wheel_radius : 0.3
+
+  # timeout de la consigne, defaut : 0.5 [s]
+  # si le robot ne recoit aucune consigne pendant ce delai
+  # il stoppe sa progression
+  cmd_vel_timeout: 0.25
+
+  # frame de reference
+  base_frame_id: base_link
+
+  # Limites de vitesse et d'acceleration
+  # si min_* n'est pas indique, la valeur par defaut est -max_*
+  # possibilite de specifique des limites sur les vitesses, les accelerations et les jerks
+  linear:
+    x:
+      has_velocity_limits    : true
+      max_velocity           : 1.0  # m/s
+      min_velocity           : -0.5 # m/s
+  angular:
+    z:
+      has_velocity_limits    : true
+      max_velocity           : 1.7  # rad/s

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<sdf version='1.4'>
+	<world name='default'>
+
+        <scene>
+            <sky>
+                <clouds>
+                    <speed>12</speed>
+               </clouds>
+            </sky>
+        </scene>
+
+<!-- TACHE 09 : une source d'éclairage modelisant le soleil a partir de la bibliotheque de modeles de GAZEBO-->
+        <include>
+    	  	<uri>model://sun</uri>
+    	</include>
+
+
+<!-- FIN DE TACHE-->
+
+<!-- TACHE 10 : Ajouter un plan de base correspond au sol a partir de la bibliotheque de modeles de GAZEBO-->
+
+        <include>
+    	  	<uri>model://ground_plane</uri>
+    	</include>
+<!-- FIN DE TACHE-->
+
+<!-- TACHE 11 : Ajouter deux arbres (oak_tree) a partir de la bibliotheque de modeles de GAZEBO
+Ils devront etre positionnes l'un a 3 metres suivant Y par rapport au centre du WORLD, oriente a 1,11 rad autour de z
+l'autre 5 metres suivant X et 3 metres suivant Y oriente a -0.3 rad.
+
+
+-->
+
+        <include>
+			<name>tree0</name>
+    	  	<uri>model://oak_tree</uri>
+		  	<pose>0.0 3.0 0.0 0.0 0.0 1.110</pose>
+    	</include>
+
+	    <include>
+			<name>tree1</name>
+	    	<uri>model://oak_tree</uri>
+			<pose>5.0 3.0 0.0 0.0 0.0 -0.30</pose>
+    	</include>
+
+
+<!-- FIN DE TACHE-->
+
+	</world>
+</sdf>
